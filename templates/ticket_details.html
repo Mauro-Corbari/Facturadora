@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="content-header">
+  <div class="container-fluid">
+    <h1>Detalles</h1>
+  </div>
+</section>
+
+<section class="content">
+  <div class="container-fluid">
+    <a href="{{ url_for('ticket.ticket_list') }}" class="btn btn-secondary mb-2">Volver</a>
+
+    <div class="mb-3">
+      <label>Seleccionar Factura</label>
+      <select class="form-control" onchange="cambiarFactura(this)">
+        {% for t in tickets %}
+        <option value="{{ t.ticketID }}" {% if factura and t.ticketID == factura.ticketID %}selected{% endif %}>
+          Factura #{{ t.ticketID }} - {{ t.date.strftime('%Y-%m-%d') }}
+        </option>
+        {% endfor %}
+      </select>
+    </div>
+
+    {% if factura %}
+    <div class="mb-3">
+      <p><strong>Cliente:</strong> {{ factura.cliente.namae }}</p>
+      <p><strong>Fecha:</strong> {{ factura.date.strftime('%Y-%m-%d') }}</p>
+      <p><strong>Total:</strong> ${{ factura.total }}</p>
+
+      <h6>Productos</h6>
+      <div class="card">
+        <div class="card-body">
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th>Producto</th>
+                <th>Precio Unitario</th>
+                <th>Cantidad</th>
+                <th>Subtotal</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for d in factura.detalles %}
+              <tr>
+                <td>{{ d.product.name }}</td>
+                <td>${{ d.unit_price }}</td>
+                <td>{{ d.quant }}</td>
+                <td>${{ d.subtotal }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+  </div>
+</section>
+
+<script>
+function cambiarFactura(select) {
+  const id = select.value;
+  window.location.href = "{{ url_for('ticket.ticket_details') }}?id=" + id;
+}
+</script>
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="content-header">
+  <div class="container-fluid">
+    <h1>Nueva Factura</h1>
+  </div>
+</section>
+<section class="content">
+  <div class="container-fluid">
+
+    <form action="{{ url_for('ticket.create_ticket_page') }}" method="post">
+      <div class="mb-3">
+        <button type="submit" class="btn btn-success" onclick="return confirm('¿Estás seguro de que querés emitir esta factura?')">Emitir Factura</button>
+        <a href="{{ url_for('ticket.ticket_list') }}" class="btn btn-danger">Cancelar</a>
+      </div>
+      <div class="mb-3">
+        <label>Cliente</label>
+        <select name="cliente_id" class="form-control mb-2" required>
+          {% for c in clientes %}
+          <option value="{{ c.kyakuID }}">{{ c.namae }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <label>Productos</label><br>
+      <button type="button" class="btn btn-light mb-2" onclick="agregarProducto()">Agregar producto</button>
+      <div class="productos-container mb-3" id="productos-container">
+        <div class="producto-item mb-2">
+          <div class="d-flex gap-10 mb-1">
+            <select name="prodID[]" class="form-control" required>
+              <option value="" selected disabled>-- Seleccione un producto --</option>
+              {% for p in productos %}
+              <option value="{{ p.id }}">{{ p.name }} - ${{ p.price }}</option>
+              {% endfor %}
+            </select>
+            <button type="button" class="btn btn-light btn-sm" onclick="eliminarProducto(this)">✕</button>
+          </div>
+          <input type="number" name="quant[]" class="form-control mt-1" placeholder="Cantidad" min="1" required>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>
+<script>
+function agregarProducto() {
+  let container = document.getElementById("productos-container");
+  let item = container.querySelector(".producto-item").cloneNode(true);
+  item.querySelector("input").value = "";
+  let select = item.querySelector("select");
+  select.selectedIndex = 0;
+  container.appendChild(item);
+}
+function eliminarProducto(button) {
+  let container = document.getElementById("productos-container");
+  if (container.querySelectorAll(".producto-item").length > 1) {
+    button.closest(".producto-item").remove();
+  } else {
+    alert("Debe haber al menos un producto en la factura.");
+  }
+}
+</script>
+{% endblock %}

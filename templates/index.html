@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="content-header">
+  <div class="container-fluid">
+    <h1>Bienvenido</h1><br>
+    <h5>Sesión iniciada como {{ current_user.name }}</h5>
+  </div>
+</section>
+
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-2 col-10">
+        <a href="{{ url_for('kyaku.kyaku_list') }}">
+          <div class="small-box bg-danger">
+            <div class="inner">
+              <h3>Clientes</h3><br>
+            </div>
+            <div class="icon"><i class="fas fa-users"></i></div>
+          </div>
+        </a>
+      </div>
+
+      <div class="col-lg-2 col-10">
+        <a href="{{ url_for('product.product_list') }}">
+          <div class="small-box bg-warning">
+            <div class="inner">
+              <h3>Productos</h3><br>
+            </div>
+            <div class="icon"><i class="fas fa-box"></i></div>
+          </div>
+        </a>
+      </div>
+
+      <div class="col-lg-2 col-10">
+        <a href="{{ url_for('ticket.ticket_list') }}">
+          <div class="small-box bg-success">
+            <div class="inner">
+              <h3>Facturas</h3><br>
+            </div>
+            <div class="icon"><i class="fas fa-file"></i></div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

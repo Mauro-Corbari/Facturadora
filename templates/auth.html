@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center" style="min-height: 94vh;">
+<section class="content w-100">
+<div class="container-fluid" style="max-width: 500px;">
+    <ul class="nav nav-tabs mb-3" id="authTabs">
+        <li class="nav-item">
+            <a class="nav-link {% if tab == 'login' %}active{% endif %}" href="?tab=login">Iniciar Sesión</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if tab == 'register' %}active{% endif %}" href="?tab=register">Registrarse</a>
+        </li>
+    </ul>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    {% if tab == "login" %}
+    <form method="POST">
+        <div class="mb-3">
+            <label for="mail" class="form-label">Correo</label>
+            <input type="email" class="form-control" id="mail" name="mail" required>
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Contraseña</label>
+            <input type="password" class="form-control" id="password" name="password" required>
+        </div>
+        <button type="submit" name="login" class="btn btn-primary w-100">Ingresar</button>
+    </form>
+    {% endif %}
+
+    {% if tab == "register" %}
+    <form method="POST">
+        <div class="mb-3">
+            <label for="name" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="name" name="name" required>
+        </div>
+        <div class="mb-3">
+            <label for="mail" class="form-label">Correo</label>
+            <input type="email" class="form-control" id="mail" name="mail" required>
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Contraseña</label>
+            <input type="password" class="form-control" id="password" name="password" required>
+        </div>
+        <div class="mb-3">
+            <label for="role" class="form-label">Rol</label>
+            <select name="role" id="role" class="form-control">
+                <option value="user" selected>Usuario</option>
+                <option value="admin">Administrador</option>
+            </select>
+        </div>
+        <button type="submit" name="register" class="btn btn-success w-100">Registrarse</button>
+    </form>
+    {% endif %}
+</div>
+</div>
+</section>
+{% endblock %}
