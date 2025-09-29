@@ -7,3 +7,5 @@ class Product(db.Model):
     desc = db.Column(db.String(255), nullable = False)
     price = db.Column(db.Integer, nullable = False)
     stock = db.Column(db.Integer, nullable = False)
+    
+    detalles = db.relationship("Detail", back_populates="product", cascade="all, delete-orphan")

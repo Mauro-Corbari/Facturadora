@@ -8,4 +8,5 @@ class Ticket(db.Model):
     total = db.Column(db.Integer, nullable = False)
     kyakuID = db.Column(db.Integer, db.ForeignKey("clientes.kyakuID"), nullable=False)
 
-    cliente = db.relationship("Okyaku", backref=db.backref("facturas", lazy=True))
+    cliente = db.relationship("Okyaku", back_populates="facturas")
+    detalles = db.relationship("Detail", back_populates="factura", cascade="all, delete-orphan")

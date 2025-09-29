@@ -11,5 +11,5 @@ class Detail(db.Model):
     unit_price = db.Column(db.Integer, nullable = False)
     subtotal = db.Column(db.Integer, nullable = False)
     
-    product = db.relationship("Product", backref="detalles")
-    ticket = db.relationship("Ticket", backref="detalles")
+    product = db.relationship("Product", back_populates="detalles")
+    factura = db.relationship("Ticket", back_populates="detalles")

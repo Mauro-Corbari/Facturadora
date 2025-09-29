@@ -7,3 +7,5 @@ class Okyaku(db.Model):
     meiru = db.Column(db.String(96), unique = True, nullable = False)
     denwa = db.Column(db.Integer, nullable = False)
     adoresu = db.Column(db.String(255), nullable = False)
+    
+    facturas = db.relationship("Ticket", back_populates="cliente", cascade="all, delete-orphan")
